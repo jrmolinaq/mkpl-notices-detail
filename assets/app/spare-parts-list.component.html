@@ -1,0 +1,111 @@
+<div class="column2 start">
+  <h3 class="title-small bold deep-sea-green m-bottom-6">
+    Lista de repuestos
+  </h3>
+  <div class="width-100 m-bottom-4 table-container" *ngFor="let spare of $spareParts">
+    <div *ngIf="spare.products.length">
+    <div class="header">
+      <h6 class="text-big bold deep-sea-green">{{spare.provider_name}} / {{spare.subsidiary_name}}</h6>
+    </div>
+    <div class="table-header width-100">
+      <span></span>
+      <h5 class="title-small-poppins bold deep-sea-green header-title">
+        Nº Pedido
+      </h5>
+      <h5 class="title-small-poppins bold deep-sea-green header-title">
+        Nombre del repuesto
+      </h5>
+      <h5 class="title-small-poppins bold deep-sea-green header-title">
+        Referencia
+      </h5>
+      <h5 class="title-small-poppins bold deep-sea-green header-title">
+        Cantidad
+      </h5>
+      <h5 class="title-small-poppins bold deep-sea-green header-title">
+        Precio(Und) / Calidad
+      </h5>
+      <h5 class="title-small-poppins bold deep-sea-green header-title">
+        Estado
+      </h5>
+    </div>
+    <div class="item-content" *ngFor="let sparePart of spare.products">
+      <span class="row2 middle center">
+        <ng-container *ngIf="sparePart.status === manualState">
+          <input (change)="onCheck(sparePart.id, spare.id)" class="radio" type="radio" [id]="sparePart.id"
+            [name]="'radio-' + spare.id" [checked]="productSelected.productId === sparePart.id && productSelected.orderId === spare.id">
+          <label class="m-right-2" [for]="sparePart.id"></label>
+        </ng-container>
+      </span>
+      <span class="text-normal deep-sea-green bold">{{ spare.id }}</span>
+      <span class="text-normal deep-sea-green">{{ sparePart.name | titlecase | shortLargeStrings: 30 }}</span>
+      <span class="text-normal deep-sea-green">{{ sparePart.reference }}</span>
+      <span class="text-normal deep-sea-green">{{ sparePart.amount  }}</span>
+      <span class="text-normal deep-sea-green"> {{sparePart.price | currency:'COP':'symbol-narrow':'.0-0'}} /
+        {{ sparePart.quality | titlecase }}</span>
+      <span class="text-normal row2 middle center deep-sea-green chip"
+        [ngClass]="states[sparePart.status]?.class">{{ states[sparePart.status]?.text }}</span>
+    </div>
+    <div class="table-footer row2 middle space-between">
+      <button type="button" class="text-normal bold hoki row2 middle order-button" (click)="openPurcharseOrder(spare.id)">
+        <i class="icon icon-empty-list text-big m-right-2"></i>
+        Ver la orden de compra
+        <i class="icon icon-long-right-arrow text-big m-left-2"></i>
+      </button>
+      <p *ngIf="purcharseOrderError.message && (purcharseOrderError.orderId === spare.id)" class="text-error m-left-4">{{purcharseOrderError.message}}</p>
+      <button type="button" class="button-primary" [disabled]="!productSelected.orderId || (spare.id !== productSelected.orderId)"
+        (click)="openModal('manual-purchase-form')">Compra manual</button>
+    </div>
+  </div>
+  </div>
+</div>
+
+<modal class="modal-hidden" id="manual-purchase-form" [applyPadding]="false">
+  <div class="column2 middle manual-purchase">
+    <span class="title-medium self-center bold deep-sea-green m-bottom-4">Compra manual de repuestos</span>
+    <span class="text-big deep-sea-green self-center m-bottom-10">Ingresa los datos solicitados a continuación</span>
+  <form class="column2 form-purchase" [formGroup]="form" (ngSubmit)="buyProduct()">
+    <ng-container formGroupName="manualPurchase">
+      <app-select-control [data]="providerOptions" formControlName="provider" label="Proveedor" id="provider"
+      class="m-bottom-5">
+    </app-select-control>
+    <app-select-control [data]="subsidiaryOptions" formControlName="subsidiary" label="Sucursal" id="subsidiary"
+      class="m-bottom-5">
+    </app-select-control>
+    <app-input-control formControlName="social" label="Razón social tercero" id="social" class="m-bottom-5">
+    </app-input-control>
+    <app-input-control formControlName="nit" label="NIT" id="nit" class="m-bottom-5">
+    </app-input-control>
+    <app-input-control formControlName="reference" label="Referencia" id="reference" class="m-bottom-5">
+    </app-input-control>
+    <app-input-control formControlName="price" label="Precio ($) sin IVA" id="price" class="m-bottom-5">
+    </app-input-control>
+    <app-input-control formControlName="comment" label="Especificaciones del repuesto" id="comment" (item)="inputItem($event)"
+      class="m-bottom-5">
+    </app-input-control>
+    <span class="comment-length">{{commentLength}}/100</span>
+    <div class="row2 width-100 end">
+      <button type="button" class="button-secondary button-width m-right-4" (click)="closeManualPurchase()">
+        Cancelar
+      </button>
+      <button [disabled]="form.invalid" type="submit" class="button-primary button-width">
+        Confirmar la compra
+      </button>
+    </div>
+    </ng-container>
+    </form>
+    </div>
+</modal>
+
+<modal class="modal-hidden" id="success-manual-purchase" [applyPadding]="false">
+  <div class="column2 center success-header">
+    <img class="success-image" src="/o/mkpl-notices-detail/icons/alert-shop.png">
+  </div>
+  <div class="column2 center success-content">
+    <span class="title-medium bold tiber m-bottom-4">
+      ¡ Compra realizada con éxito !
+    </span>
+    <button type="button" class="button-primary" (click)="closeModal('success-manual-purchase')">
+      Entendido
+    </button>
+  </div>
+</modal>

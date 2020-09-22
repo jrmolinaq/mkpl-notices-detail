@@ -1,0 +1,104 @@
+<div class="screen-container-notice-det">
+  <div class="column2 start">
+    <!-- TODO se quita routerlink <button class="bold m-bottom-7 row2 middle" [routerLink]="['/notices']">
+      <span class="icon icon-long-left-arrow back-arrow deep-sea-green"></span>
+      <span class="poppins text-big deep-sea-green bold m-left-2">Volver</span>
+	</button> -->
+	<a class="text-big poppins bold deep-sea-green m-bottom-6 row2 middle link-simple" href="/notices">
+		<i class="icon icon-long-left-arrow deep-sea-green title-medium m-right-1"></i>
+		Volver
+	</a>
+    <h3 class="title-small bold tiber m-bottom-9">
+      Detalle del aviso
+    </h3>
+  </div>
+  <ng-container *ngIf="noticeInfo">
+    <div class="info-container-notice-det m-bottom-4">
+      <div class="column2 info-card">
+        <div class="row2 space-between m-bottom-2">
+          <div class="column2">
+            <span class="card-title">Información del aviso</span>
+            <span class="title-medium bold tiber">
+              # {{ noticeInfo.notice_number }}
+            </span>
+          </div>
+          <span [ngClass]="noticeInfo.status === 'critical' ? 'status-indicator danger' : 'status-indicator'"></span>
+        </div>
+        <span class="text-small bold gothic m-bottom-7">
+          Fecha del aviso {{ noticeInfo.notice_date | formatDate: 'dd/MM/yyyy' }}
+        </span>
+        <span class="text-medium hoki m-bottom-2">
+          Placa vehículo:
+        </span>
+        <span class="text-medium deep-sea-green m-bottom-2 info-row">
+          {{ noticeInfo.plate }}
+        </span>
+        <span class="text-medium hoki m-bottom-2">
+          Marca:
+        </span>
+        <span class="text-medium deep-sea-green m-bottom-2 info-row">
+          {{ noticeInfo.brand }}
+        </span>
+        <span class="text-medium hoki m-bottom-2">
+          Modelo:
+        </span>
+        <span class="text-medium deep-sea-green m-bottom-2 info-row">
+          {{ noticeInfo.line }}
+        </span>
+        <span class="text-medium hoki m-bottom-2">
+          VIN:
+        </span>
+        <span class="text-medium deep-sea-green m-bottom-2 info-row">
+          {{ noticeInfo.vin }}
+        </span>
+        <span class="text-medium hoki m-bottom-2">
+          Taller de entrega:
+        </span>
+        <span class="text-medium deep-sea-green m-bottom-2 info-row">
+          {{ noticeInfo.workshop_name }}
+        </span>
+        <span class="text-medium hoki m-bottom-2">
+          Tipo de cobertura:
+        </span>
+        <span class="text-medium deep-sea-green">
+          {{ noticeInfo.coverage }}
+        </span>
+      </div>
+      <div class="column2">
+        <div class="column2 info-card m-bottom-4">
+          <span class="card-title">Taller de entrega</span>
+          <span class="title-medium bold tiber m-bottom-1">{{ noticeInfo.workshop_name }}</span>
+          <span class="text-small bold gothic m-bottom-6">{{ noticeInfo.workshop_address }}</span>
+          <span class="text-medium hoki m-bottom-2">Teléfono:</span>
+          <span class="text-medium deep-sea-green m-bottom-2 info-row">
+            {{ noticeInfo.phone }}
+          </span>
+          <span class="text-medium hoki m-bottom-2">Celular:</span>
+          <span class="text-medium deep-sea-green m-bottom-2 info-row">
+            {{ noticeInfo.cellphone }}
+          </span>
+          <span class="text-medium hoki m-bottom-2">E-mail:</span>
+          <span class="text-medium deep-sea-green m-bottom-2">
+            {{ noticeInfo.email }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!!noticeInfo?.manual_purchase" class="row2 m-bottom-9 warning-content width-100">
+      <img class="warning-icon m-right-8 m-top-1" src="/o/mkpl-notices-detail/icons/warning.svg" alt="Warning">
+      <div class="column2">
+        <h3 class="title-small roboto deep-sea-green m-bottom-3">
+          Tenemos dificultades con los repuestos
+        </h3>
+        <p class="text-big deep-sea-green">
+          Algunos de los repuestos solicitados requieren de una
+          <span class="bold text-big deep-sea-green">Compra manual.</span>
+        </p>
+      </div>
+    </div>
+    <ng-container *ngIf="noticeInfo.orders.length">
+      <spare-parts-list (completePurchase)="getNoticeInfo()" [spareParts]="noticeInfo.orders" class="width-100">
+      </spare-parts-list>
+    </ng-container>
+  </ng-container>
+</div>
