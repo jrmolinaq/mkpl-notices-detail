@@ -23,9 +23,4 @@ export class PurcharseOrderService {
         })
       );
   }
-  
-  // TODO borrar dummy
-  getPurcharseOrderPDF2(){
-    return '';
-  }
 }

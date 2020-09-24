@@ -97,27 +97,25 @@ export class NoticeService {
       );
   }
   getNoticeDetail(id: number | string) {
-    // TODO actualizar ruta endpoint
-    return this.http.get(`http://localhost:8081/api/notice/${id}`);
+    return this.http.get(`http://localhost:8080/o/ProviderCompraDigitalPortlet/api/notice/${id}`);
   }
 
   getProvider() {
     return this.http.get<Provider>(
       // TODO actualizar ruta endpoint
-      `http://localhost:8081/api/subocol/provider`
+      `http://localhost:8080/o/ProviderCompraDigitalPortlet/api/provider/found`
     );
   }
 
   getSubsidiary(id: any) {
     return this.http.get<Subsidiaries>(
       // TODO actualizar ruta endpoint
-      `http://localhost:8081/api/subsidiary/provider/${id}`
+      `http://localhost:8080/o/ProviderCompraDigitalPortlet/api/subsidiary/provider/${id}`
     );
   }
 
   manualPurchase(body: any) {
-    // TODO actualizar ruta endpoint
-    return this.http.post(`rutaEndpoint/order/manual`, body);
+    return this.http.post(`http://localhost:8080/o/ProviderCompraDigitalPortlet/api/order/manual`, body);
   }
 
   getNoticesByProvider(
