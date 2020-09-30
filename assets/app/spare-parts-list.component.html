@@ -7,7 +7,7 @@
     <div class="header">
       <h6 class="text-big bold deep-sea-green">{{spare.providerName}} / {{spare.subsidiaryName}}</h6>
     </div>
-    <div class="table-header width-100">
+    <div class="table-header-spl1 width-100">
       <span></span>
       <h5 class="title-small-poppins bold deep-sea-green header-title">
         Nº Pedido
@@ -28,7 +28,7 @@
         Estado
       </h5>
     </div>
-    <div class="item-content" *ngFor="let sparePart of spare.products">
+    <div class="item-content-spl1" *ngFor="let sparePart of spare.products">
       <span class="row2 middle center">
         <ng-container *ngIf="sparePart.status === manualState">
           <input (change)="onCheck(sparePart.id, spare.id)" class="radio" type="radio" [id]="sparePart.id"

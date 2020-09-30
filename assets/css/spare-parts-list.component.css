@@ -1,4 +1,4 @@
-.table-header {
+.table-header-spl1 {
   align-items: center;
   display: grid;
   grid-template-columns: 40px 1fr 2fr 1fr 1fr 2fr 1fr;
@@ -44,7 +44,7 @@
   padding: 15px;
 }
 
-.item-content {
+.item-content-spl1 {
   align-items: center;
   border-radius: 8px;
   display: grid;
@@ -54,7 +54,7 @@
   transition: all 0.2s ease-in-out;
   width: 100%;
 }
-.item-content:hover {
+.item-content-spl1:hover {
   background-color: #E3E8EB;
   border-radius: 8px;
   box-shadow: 10px 10px 24px -12px rgba(0, 0, 0, 0.35);

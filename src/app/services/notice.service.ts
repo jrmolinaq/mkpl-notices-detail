@@ -60,7 +60,7 @@ export class NoticeService {
       // TODO actualizar ruta endpoint David
     return this.http
       .get<ListManualPurchaseResponse>(
-        `http://localhost:8080/o/ProviderCompraDigitalPortlet/api/order/manualpurchase/${orderBy}`,
+        `/o/ProviderCompraDigitalPortlet/api/order/manualpurchase/${orderBy}`,
         { params }
       )
       .pipe(
@@ -97,25 +97,25 @@ export class NoticeService {
       );
   }
   getNoticeDetail(id: number | string) {
-    return this.http.get(`http://localhost:8080/o/ProviderCompraDigitalPortlet/api/notice/${id}`);
+    return this.http.get(`/o/ProviderCompraDigitalPortlet/api/notice/${id}`);
   }
 
   getProvider() {
     return this.http.get<Provider>(
       // TODO actualizar ruta endpoint
-      `http://localhost:8080/o/ProviderCompraDigitalPortlet/api/provider/found`
+      `/o/ProviderCompraDigitalPortlet/api/provider/found`
     );
   }
 
   getSubsidiary(id: any) {
     return this.http.get<Subsidiaries>(
       // TODO actualizar ruta endpoint
-      `http://localhost:8080/o/ProviderCompraDigitalPortlet/api/subsidiary/provider/${id}`
+      `/o/ProviderCompraDigitalPortlet/api/subsidiary/provider/${id}`
     );
   }
 
   manualPurchase(body: any) {
-    return this.http.post(`http://localhost:8080/o/ProviderCompraDigitalPortlet/api/order/manual`, body);
+    return this.http.post(`/o/ProviderCompraDigitalPortlet/api/order/manual`, body);
   }
 
   getNoticesByProvider(
@@ -134,7 +134,7 @@ export class NoticeService {
       .set('page', page.toString());
     // TODO actualizar ruta endpoint
     return this.http
-      .get<ListNoticeResponse>(`http://localhost:8080/o/ProviderCompraDigitalPortlet/api/notice/${path}`, {
+      .get<ListNoticeResponse>(`/o/ProviderCompraDigitalPortlet/api/notice/${path}`, {
         params,
       })
       .pipe(
